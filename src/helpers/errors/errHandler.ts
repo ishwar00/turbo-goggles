@@ -15,7 +15,6 @@ export function asyncErrHandler<
         try {
             await handler(req, res, next);
         } catch (err: unknown) {
-			console.log('asyncErrHandler')
             next(err);
         }
     };

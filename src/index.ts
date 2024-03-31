@@ -6,10 +6,19 @@ import { asyncErrHandler, errHandler } from "./helpers/errors/errHandler";
 import { prisma } from "./dataSource";
 import routes from "./config/routes";
 import { authenticate } from "./middleware/auth.middleware";
+import swaggerUi from "swagger-ui-express";
+import swaggerJsdoc from "swagger-jsdoc";
+import swagerDoc from "./swagger.json";
 
 const app = express();
 app.use(bodyParser.json({ limit: "100kb" }));
 app.use(cookieParser());
+
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerJsdoc(swagerDoc), { explorer: true }),
+);
 app.use(routes.onBoardingRoutes);
 app.use(routes.offBoardingRoutes);
 app.use("/api/", asyncErrHandler(authenticate), routes.protectedRoutes);

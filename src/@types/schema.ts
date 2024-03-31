@@ -28,7 +28,6 @@ const ParsePositiveInteger = z.preprocess(
 );
 
 export const PublicAPIParamsSchema = z.object({
-    title: z.string().optional(),
     description: z.string().optional(),
     auth: z.string().optional(),
     https: z.union([z.literal("true"), z.literal("false")]).optional(),

@@ -31,7 +31,7 @@ onBoardingRoutes.post(
     "/register",
     validateData(
         UserRegisterSchema,
-        (req) => req.query,
+        (req) => req.body,
         (data, req) => (req.body = data),
     ),
     asyncErrHandler(userRegister<UserRegister>),

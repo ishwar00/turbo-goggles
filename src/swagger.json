@@ -1,0 +1,401 @@
+{
+    "definition": {
+        "openapi": "3.0.0",
+        "info": {
+            "title": "Carbon Cell Tasks",
+            "description": "API documentation for 4 tasks out of 5 tasks.",
+            "version": "1.0.0"
+        },
+        "paths": {
+            "/": {
+                "get": {
+                    "summary": "Root endpoint",
+                    "description": "Returns a message. This is good way to check the server is up.",
+                    "responses": {
+                        "200": {
+                            "description": "Successful response",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "success": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "statusCode": {
+                                                "type": "integer",
+                                                "example": 200
+                                            },
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "server is up and running."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "/register": {
+                "post": {
+                    "summary": "User Registration API.",
+                    "description": "Takes username and password and creates a new user account. Each user has unique username.",
+                    "requestBody": {
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "username": {
+                                            "description": "username that will be used to uniquely identify the user.",
+                                            "type": "string",
+                                            "example": "carbonCell",
+                                            "minLength": 8
+                                        },
+                                        "password": {
+                                            "description": "password of the account.",
+                                            "type": "string",
+                                            "minLength": 8,
+                                            "example": "LetCarbonCellIn"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "201": {
+                            "description": "Successful response",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "success": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "statusCode": {
+                                                "type": "integer",
+                                                "example": 201
+                                            },
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "user 'ishwar' has been registered"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "request parameters or body is not correct or username is already taken."
+                        },
+                        "500": {
+                            "description": "something unexpected has happened."
+                        },
+                        "404": {
+                            "description": "URL path is not correct or method."
+                        }
+                    }
+                }
+            },
+            "/login": {
+                "post": {
+                    "summary": "User Login API.",
+                    "description": "Creates a user session by setting a Cookie with JWT token.",
+                    "requestBody": {
+                        "required": true,
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "username": {
+                                            "description": "username that will be used to uniquely identify the user.",
+                                            "type": "string",
+                                            "example": "carbonCell",
+                                            "minLength": 8
+                                        },
+                                        "password": {
+                                            "description": "password of the account.",
+                                            "type": "string",
+                                            "minLength": 8,
+                                            "example": "LetCarbonCellIn"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "responses": {
+                        "200": {
+                            "description": "Login Successful",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "success": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "statusCode": {
+                                                "type": "integer",
+                                                "example": 200
+                                            },
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "user 'ishwar' has been registered"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "request parameters or body is not correct."
+                        },
+                        "500": {
+                            "description": "something unexpected has happened."
+                        },
+                        "404": {
+                            "description": "URL path is not correct or method."
+                        },
+
+                        "401": {
+                            "description": "Incorrect credentials or username."
+                        }
+                    }
+                }
+            },
+            "/logout": {
+                "post": {
+                    "summary": "User Logout API.",
+                    "description": "Invalidates current user session, in otherwords Invalidates the cookie set during the login.",
+                    "responses": {
+                        "200": {
+                            "description": "Logged out succesfully.",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "success": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "statusCode": {
+                                                "type": "integer",
+                                                "example": 200
+                                            },
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Logged out succesfully."
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Invalid Session or paramters are not correct."
+                        },
+                        "500": {
+                            "description": "something unexpected has happened."
+                        },
+                        "404": {
+                            "description": "URL path is not correct or method."
+                        },
+                        "401": {
+                            "description": "Incorrect credentials or username."
+                        }
+                    }
+                }
+            },
+
+            "/api/data": {
+                "get": {
+                    "summary": "Protected API to fetch data entries.",
+                    "description": "Fetches the publicapis data.",
+                    "parameters": [
+                        {
+                            "name": "description",
+                            "in": "query",
+                            "description": "Search by description of entry",
+                            "required": false,
+                            "schema": {
+                                "type": "string",
+                                "example": "Resource to help"
+                            }
+                        },
+                        {
+                            "name": "auth",
+                            "in": "query",
+                            "description": "Search by auth type of entry",
+                            "required": false,
+                            "schema": {
+                                "type": "string",
+                                "example": "apiKey"
+                            }
+                        },
+                        {
+                            "name": "https",
+                            "in": "query",
+                            "description": "Search by entries that support HTTPS or not.",
+                            "required": false,
+                            "schema": {
+                                "type": "boolean",
+                                "example": true
+                            }
+                        },
+                        {
+                            "name": "cors",
+                            "in": "query",
+                            "description": "Search by CORS support for entry",
+                            "required": false,
+                            "schema": {
+                                "type": "string",
+                                "enum": ["yes", "no", "unknown"],
+                                "example": "yes"
+                            }
+                        },
+                        {
+                            "name": "category",
+                            "in": "query",
+                            "description": "entries of a specific category",
+                            "required": false,
+                            "schema": {
+                                "type": "string",
+                                "example": "Science"
+                            }
+                        },
+                        {
+                            "name": "limit",
+                            "in": "query",
+                            "description": "Max entries to be returned.",
+                            "required": false,
+                            "schema": {
+                                "type": "integer",
+                                "example": 30
+                            }
+                        }
+                    ],
+                    "responses": {
+                        "200": {
+                            "description": "Data fetch was successfull from publicAPIs",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "object",
+                                        "properties": {
+                                            "success": {
+                                                "type": "boolean",
+                                                "example": true
+                                            },
+                                            "statusCode": {
+                                                "type": "integer",
+                                                "example": 200
+                                            },
+                                            "data": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Data fetch was successfull from publicAPIs"
+                                                    },
+                                                    "count": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "entries": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "API": {
+                                                                "type": "string",
+                                                                "example": "Axolotl"
+                                                            },
+                                                            "Description": {
+                                                                "type": "string",
+                                                                "example": "Resource to help get pets adopted"
+                                                            },
+                                                            "Auth": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "Cors": {
+                                                                "type": "string",
+                                                                "example": "yes"
+                                                            },
+                                                            "Link": {
+                                                                "type": "string",
+                                                                "example": "https://www.adoptapet.com/public/apis/pet_list.html"
+                                                            },
+                                                            "Category": {
+                                                                "type": "string",
+                                                                "example": "Animals"
+                                                            }
+                                                        },
+                                                        "example": [
+                                                            {
+                                                                "API": "AdoptAPet",
+                                                                "Description": "Resource to help get pets adopted",
+                                                                "Auth": "apiKey",
+                                                                "HTTPS": true,
+                                                                "Cors": "yes",
+                                                                "Link": "https://www.adoptapet.com/public/apis/pet_list.html",
+                                                                "Category": "Animals"
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "request parameters or body is not correct."
+                        },
+                        "500": {
+                            "description": "something unexpected has happened."
+                        },
+                        "404": {
+                            "description": "URL path is not correct or method."
+                        },
+
+                        "401": {
+                            "description": "Incorrect credentials or username."
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "apis": []
+}

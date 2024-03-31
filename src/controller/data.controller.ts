@@ -12,6 +12,9 @@ const retryPolicy = (err: unknown): boolean => {
     return false;
 };
 
+/**
+ * @swagger
+ */
 export async function fetchData<T extends PublicAPIParams>(
     req: expr.Request<{}, {}, {}, T>,
     res: expr.Response<IResBody & { data: { count: number } }>,
@@ -49,11 +52,11 @@ export async function fetchData<T extends PublicAPIParams>(
 
     let data = apiResponse.data as {
         count: number;
-        entries: unknown[];
+        entries: unknown[] | null;
     };
 
     if (limit) {
-        data.entries = data.entries.slice(0, limit);
+        data.entries = data.entries?.slice(0, limit) ?? null;
     }
 
     res.status(200).json({
@@ -62,7 +65,7 @@ export async function fetchData<T extends PublicAPIParams>(
         data: {
             message: "Data fetch was successfull from publicAPIs.",
             ...data,
-            count: data.entries.length,
+            count: data.entries?.length ?? 0,
         },
     });
 }
