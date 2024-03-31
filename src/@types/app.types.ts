@@ -1,8 +1,13 @@
 import { z } from "zod";
-import { UserLoginSchema, UserRegisterSchema } from "./schema";
+import {
+    PublicAPIParamsSchema,
+    UserLoginSchema,
+    UserRegisterSchema,
+} from "./schema";
 
 export type UserRegister = z.infer<typeof UserRegisterSchema>;
 export type UserLogin = z.infer<typeof UserLoginSchema>;
+export type PublicAPIParams = z.infer<typeof PublicAPIParamsSchema>;
 export type JWTPayload = {
     id: string; // session id
 };

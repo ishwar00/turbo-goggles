@@ -54,7 +54,7 @@ export function errHandler(
     res: expr.Response,
     __: expr.NextFunction,
 ): void {
-    console.log(err);
+    console.log(JSON.stringify(err, null, 2));
 
     if (
         isObject(err) &&

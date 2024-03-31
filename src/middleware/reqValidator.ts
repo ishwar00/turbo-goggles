@@ -1,17 +1,18 @@
 import expr from "express";
 import { ZodType } from "zod";
 
-export function validateData<
-    K extends keyof expr.Request,
-    T extends expr.Request[K],
->(zodModel: ZodType<T>, key: K): expr.RequestHandler {
+export function validateData<T>(
+    zodModel: ZodType<T>,
+    getData: (req: expr.Request) => unknown,
+    setData: (data: T, req: expr.Request) => void,
+): expr.RequestHandler {
     return (
         req: expr.Request,
         res: expr.Response,
         next: expr.NextFunction,
     ): void => {
         try {
-            const data = req[key];
+            const data = getData(req);
             const parse_result = zodModel.safeParse(data);
             if (!parse_result.success) {
                 res.status(400).json({
@@ -28,7 +29,7 @@ export function validateData<
                 });
                 return undefined;
             }
-            req[key] = parse_result.data;
+            setData(parse_result.data, req);
             next();
         } catch (err: unknown) {
             next(err);
