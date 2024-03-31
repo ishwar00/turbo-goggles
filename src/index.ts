@@ -2,28 +2,17 @@ import express from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import { envVars } from "./config/env.config";
-import { validateData } from "./middleware/reqValidator";
-import { UserRegisterSchema } from "./@types/schema";
 import { asyncErrHandler, errHandler } from "./helpers/errors/errHandler";
-import { userRegister } from "./controller/auth.controller";
-import { UserRegister } from "./@types/app.types";
 import { prisma } from "./dataSource";
-// import routes from "./config/routes";
-// import { authenticate } from "./middleware/auth.middleware";
+import routes from "./config/routes";
+import { authenticate } from "./middleware/auth.middleware";
 
 const app = express();
 app.use(bodyParser.json({ limit: "100kb" }));
 app.use(cookieParser());
-
-app.post(
-    "/register",
-    validateData(UserRegisterSchema, "body"),
-    asyncErrHandler(userRegister<UserRegister>),
-);
-
-app.use(errHandler)
-
-// app.use("/protected/", authenticate, routes.protectedRoutes);
+app.use(routes.onBoardingRoutes);
+app.use(routes.offBoardingRoutes);
+app.use("/api/", asyncErrHandler(authenticate), routes.protectedRoutes);
 
 app.get("/", (_, res) => {
     res.status(200).json({
@@ -31,6 +20,18 @@ app.get("/", (_, res) => {
         statusCode: 200,
         data: {
             message: "server is up and running.",
+        },
+    });
+});
+
+app.use(errHandler);
+
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        statusCode: 404,
+        data: {
+            message: `Invalid URL path '${req.path}'.`,
         },
     });
 });

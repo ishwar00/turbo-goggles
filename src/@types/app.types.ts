@@ -4,7 +4,7 @@ import { UserLoginSchema, UserRegisterSchema } from "./schema";
 export type UserRegister = z.infer<typeof UserRegisterSchema>;
 export type UserLogin = z.infer<typeof UserLoginSchema>;
 export type JWTPayload = {
-    id: string;
+    id: string; // session id
 };
 
 export interface IResBody {
