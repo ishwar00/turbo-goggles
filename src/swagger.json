@@ -117,7 +117,7 @@
             "/login": {
                 "post": {
                     "summary": "User Login API.",
-                    "description": "Creates a user session by setting a Cookie with JWT token.",
+                    "description": "Creates a user session by setting a Cookie with JWT token. If user login mulitple times, only last login session will be valid, others will invalidated.",
                     "requestBody": {
                         "required": true,
                         "content": {
@@ -181,7 +181,6 @@
                         "404": {
                             "description": "URL path is not correct or method."
                         },
-
                         "401": {
                             "description": "Incorrect credentials or username."
                         }
@@ -240,7 +239,7 @@
 
             "/api/data": {
                 "get": {
-                    "summary": "Protected API to fetch data entries.",
+                    "summary": "Protected API to fetch data entries. This api is protected, please login before using.",
                     "description": "Fetches the publicapis data.",
                     "parameters": [
                         {

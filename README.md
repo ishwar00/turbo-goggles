@@ -28,7 +28,7 @@ To check or interact hit `http://localhost:8000`
 Make sure you have `Nodejs`(20 was the version it is developed on.)
 
 ```bash
-npm i --omit=dev
+npm install
 ```
 
 Build the project.

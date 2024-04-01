@@ -15,6 +15,7 @@ export function asyncErrHandler<
         try {
             await handler(req, res, next);
         } catch (err: unknown) {
+            console.log(JSON.stringify(err, null, 2));
             next(err);
         }
     };
@@ -33,7 +34,7 @@ export function finalErrHandler(err: unknown): IResBody | undefined {
             };
         }
         case err instanceof BackendAPIErr: {
-			console.log("BackendAPIErr")
+            console.log("BackendAPIErr");
             return {
                 success: false,
                 statusCode: err.statusCode,
